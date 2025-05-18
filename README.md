@@ -21,18 +21,20 @@ DATABASE_URL="postgresql://postgres:''@localhost:5432/erco_market?schema=public"
 JWT_SECRET=""
 PORT=4000
 URL=http://localhost:4000
+```
+---
 
-Comandos para instalación:
+## Comandos para instalación:
 npm install
 npm run buld 
 npm run dev
 npm run postinstall
 npx prisma generate #si lo requiere
 
-Instrucciones de uso:
-
+## Instrucciones de uso:
 ruta documentación:
-/docs
+(http://localhost:4000/docs)
+
 1. Registrarse, role al momento de crear el usuario:
 admin | buyer | seller
 
