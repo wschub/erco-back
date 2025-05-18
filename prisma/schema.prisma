@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  //output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id         Int       @id @default(autoincrement())
+  full_name  String
+  surname    String
+  email      String   @unique
+  password   String
+  role       String   @default("buyer") // admin | buyer | seller
+  offers     Offer[]                          // Ofertas publicadas por este usuario
+  purchases  Transaction[] @relation("buyer") // Compras realizadas por el usuario
+  sales      Transaction[] @relation("seller") // Ventas realizadas (por haber sido el seller de la oferta)
+  createdAt  DateTime  @default(now())
+}
+
+model Offer {
+  id          Int       @id @default(autoincrement())
+  qtykwh      Float
+  priceKwh    Float
+  startTime   DateTime
+  endTime     DateTime
+  status      String     @default("active") // active, sold, expired
+  seller      User       @relation(fields: [sellerId], references: [id])
+  sellerId    Int
+  transaction Transaction?
+}
+
+model Transaction {
+  id         Int       @id @default(autoincrement())
+  offer      Offer     @relation(fields: [offerId], references: [id])
+  offerId    Int       @unique
+
+  buyer      User      @relation("buyer", fields: [buyerId], references: [id])
+  buyerId    Int
+
+  seller     User      @relation("seller", fields: [sellerId], references: [id])
+  sellerId   Int       // <- esto se llena con offer.sellerId al momento de la venta
+
+  totalPrice Float
+  createdAt  DateTime  @default(now())
+}
