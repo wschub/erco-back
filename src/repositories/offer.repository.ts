@@ -1,7 +1,10 @@
 import { prisma } from '../prisma/client';
 import { Offer, Prisma } from '@prisma/client';
+const now:any = new Date();
 
 export class OfferRepository {
+
+
   
 async createOffer(data: any) {
   return await prisma.offer.create({ data });
@@ -21,19 +24,54 @@ async createOffer(data: any) {
   }
 
   async findAll() {
-    return await prisma.offer.findMany({ include: { seller: true } });
-  }
+  const now = new Date();
+
+  return await prisma.offer.findMany({
+    where: {
+      status: 'active',
+      startTime: {
+        lte: now,
+      },
+      endTime: {
+        gte: now,
+      },
+    },
+    include: {
+      seller: true,
+    },
+  });
+}
 
   async findBySeller(sellerId: number) {
-    return await prisma.offer.findMany({
-      where: { sellerId },
-      include: { seller: true },
-    });
-  }
+  const now = new Date(); // Necesario para usar 'now'
+
+  return await prisma.offer.findMany({
+    where: {
+      sellerId,
+      startTime: {
+        lte: now,
+      },
+      endTime: {
+        gte: now,
+      },
+    },
+    include: {
+      seller: true,
+    },
+  });
+}
 
   async findActive() {
+    const now = new Date(); 
     return await prisma.offer.findMany({
-      where: { status: 'active' },
+      where: { status: 'active',
+        startTime: {
+        lte: now, // startTime <= now
+      },
+      endTime: {
+        gte: now, // endTime >= now
+      },
+       },
       include: { seller: true },
     });
   }

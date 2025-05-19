@@ -6,7 +6,7 @@ const transactionRepository = new TransactionRepository();
 
 export class TransactionService {
   
-   async createTransaction(payload: { offerId: number; sellerId: number; buyerId: number }) {
+   async createTransaction(payload: { offerId: number; sellerId: number; buyerId: number; qtykwh:number; priceKwh:number; }) {
     const transaction = await transactionRepository.createTransactionWithOfferUpdate(payload);
 
     // Opcional: notificación por socket (si se desea notificar a vendedor/comprador)

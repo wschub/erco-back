@@ -2,6 +2,9 @@ import { prisma } from '../prisma/client';
 import { User } from '@prisma/client';
 
 export class UserRepository {
+  async findAll(): Promise<User[]> {
+    return prisma.user.findMany({orderBy: {full_name: 'asc',},});
+  }
   async findByEmail(email: string): Promise<User | null> {
     return prisma.user.findUnique({ where: { email } });
   }

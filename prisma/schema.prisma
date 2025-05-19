@@ -50,7 +50,10 @@ model Transaction {
 
   seller     User      @relation("seller", fields: [sellerId], references: [id])
   sellerId   Int       // <- esto se llena con offer.sellerId al momento de la venta
-
+  
+  
+  qtykwh      Float
+  priceKwh    Float
   totalPrice Float
   createdAt  DateTime  @default(now())
 }

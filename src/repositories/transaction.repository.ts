@@ -3,7 +3,7 @@ import { Transaction, Prisma } from '@prisma/client';
 
 export class TransactionRepository {
   
-   async createTransactionWithOfferUpdate(data: { offerId: number; sellerId: number; buyerId: number }) {
+   async createTransactionWithOfferUpdate(data: { offerId: number; sellerId: number; buyerId: number; qtykwh: number; priceKwh:number }) {
     return await prisma.$transaction(async (tx) => {
       const offer = await tx.offer.findUnique({
         where: { id: data.offerId },
@@ -20,6 +20,8 @@ export class TransactionRepository {
           offerId: data.offerId,
           sellerId: data.sellerId,
           buyerId: data.buyerId,
+          qtykwh: offer.qtykwh,
+          priceKwh: offer.priceKwh,
           totalPrice,
         },
       });

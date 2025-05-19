@@ -23,3 +23,12 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
+
+export const getUsers = async (req: Request, res: Response) => {
+  try {
+    const result = await authService.getUsers();
+    res.json(result);
+  } catch (err: any) {
+    res.status(400).json({ message: err.message });
+  }
+};

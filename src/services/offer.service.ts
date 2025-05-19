@@ -14,7 +14,10 @@ export class OfferService {
      sellerId: user.id  
     });
 
-    io.emit('new-offer', newOffer); // socket broadcast aquí
+    const refreshAllOffers = await  offerRepository.findAll();
+    console.log(refreshAllOffers);
+
+    io.emit('new-offer', refreshAllOffers); // socket broadcast aquí
     return newOffer;
   }
 

@@ -16,9 +16,9 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
   const token = authHeader.split(' ')[1];
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: number };
+    const decoded = jwt.verify(token, JWT_SECRET) as { id: number };
 
-    const user = await prisma.user.findUnique({ where: { id: decoded.userId } });
+    const user = await prisma.user.findUnique({ where: { id: decoded.id } });
 
     if (!user) {
       res.status(401).json({ message: 'Usuario no encontrado' });
