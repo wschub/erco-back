@@ -12,6 +12,17 @@
 - **Persistencia y expiración:** PostgreSQL + cron jobs o TTL vía backend  
 - **Documentación API:** Swagger con `swagger-jsdoc`
 
+## Explicación
+
+- **Autenticación : JWT + Middleware Express :** Es la estrategia de autenticación más básica y sencilla, además de ser la sugerida.
+- **ORM : Prisma:** 	Tipado fuerte, migraciones fáciles, integración fluida con PostgreSQL y ofrece una capa extra de validacieon y seguridad
+- **Concurrencia : Transacciones en Prisma + bloqueo lógico:** 	Para asegurar que una oferta no sea comprada dos veces
+- **Comunicación en tiempo real : socket.io:** Amplio soporte y fácil de integrar en Node.js, haciendo posible la concurrencia y la comunicación doble vía.
+- **Vencimiento de ofertas : Comparación de Date.now() con end_time + setInterval() o cron job para invalidar :** Cambiar los estados de las ofertas de manera automatizada.
+- **Integridad y persistencia : Uso de transacciones en Prisma:** Evita estados intermedios en compras
+
+
+
 ---
 
 ## Variables de entorno `.env`
