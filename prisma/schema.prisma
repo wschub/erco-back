@@ -26,7 +26,10 @@ model User {
   purchases  Transaction[] @relation("buyer") // Compras realizadas por el usuario
   sales      Transaction[] @relation("seller") // Ventas realizadas (por haber sido el seller de la oferta)
   createdAt  DateTime  @default(now())
+
 }
+
+
 
 model Offer {
   id          Int       @id @default(autoincrement())
@@ -50,6 +53,7 @@ model Transaction {
 
   seller     User      @relation("seller", fields: [sellerId], references: [id])
   sellerId   Int       // <- esto se llena con offer.sellerId al momento de la venta
+  
   
   
   qtykwh      Float

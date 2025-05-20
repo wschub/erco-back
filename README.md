@@ -54,7 +54,7 @@ admin | buyer | seller
 En ofertas y transacciones tienen restricción para cceder según el rol.
 
 ## Front End
-Repo: (https://github.com/wschub/glance-and-gleam-ui)
+Repo: (https://github.com/wschub/erco-front)
 
 ```env
 VITE_URL_SERVICE=http://localhost:4000
