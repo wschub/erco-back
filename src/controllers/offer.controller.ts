@@ -55,3 +55,14 @@ export const getOfferById = async (req: Request, res: Response) => {
   }
 };
 
+
+//count
+export const getCountOffers = async (req: Request, res: Response) => {
+  try {
+    const offer = await offerService.getCountOffers(String(req.params.status));
+    res.json({"data":offer});
+  } catch (error:any) {
+    res.status(404).json({ error: error.message });
+  }
+};
+

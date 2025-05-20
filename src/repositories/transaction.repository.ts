@@ -36,14 +36,84 @@ export class TransactionRepository {
   }
 
   async getAllTransactions() {
-    return prisma.transaction.findMany();
+    return prisma.transaction.findMany({
+      include: {
+      buyer: {
+        select: {
+          full_name: true,
+          surname: true,
+        },
+      },
+      seller: {
+        select: {
+          full_name: true,
+          surname: true,
+        },
+      },
+    },
+    });
   }
 
   async getTransactionsByBuyer(buyerId: number) {
-    return prisma.transaction.findMany({ where: { buyerId } });
+    //return prisma.transaction.findMany({ where: { buyerId } });
+    return prisma.transaction.findMany({
+    where: { buyerId },
+    include: {
+      buyer: {
+        select: {
+          full_name: true,
+          surname: true,
+        },
+      },
+      seller: {
+        select: {
+          full_name: true,
+          surname: true,
+        },
+      },
+    },
+  });
   }
 
   async getTransactionsBySeller(sellerId: number) {
-    return prisma.transaction.findMany({ where: { sellerId } });
+    //return prisma.transaction.findMany({ where: { sellerId } });
+    return prisma.transaction.findMany({
+    where: { sellerId },
+    include: {
+      buyer: {
+        select: {
+          full_name: true,
+          surname: true,
+        },
+      },
+      seller: {
+        select: {
+          full_name: true,
+          surname: true,
+        },
+      },
+    },
+  });
   }
+
+  //TOTALES
+  async getTotalPrice() {
+    const result = await prisma.transaction.aggregate({
+      _sum: {
+        totalPrice: true,
+      },
+    });
+    return result._sum.totalPrice || 0;
+  }
+
+  async getTotalKwh() {
+    const result = await prisma.transaction.aggregate({
+      _sum: {
+        qtykwh: true,
+      },
+    });
+    return result._sum.qtykwh || 0;
+  }
+
+
 }

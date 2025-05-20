@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: erco-db
+    restart: always
+    environment:
+      POSTGRES_USER: erco
+      POSTGRES_PASSWORD: erco123
+      POSTGRES_DB: erco_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  erco-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: erco-app
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    command: >
+      sh -c "
+        npx prisma generate &&
+        npx prisma db push &&
+        yarn build &&
+        yarn start
+      "
+
+volumes:
+  postgres_data:

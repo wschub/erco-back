@@ -75,4 +75,23 @@ async createOffer(data: any) {
       include: { seller: true },
     });
   }
+
+  //TOTALES
+async getCountOffers(status:string) {
+  const now = new Date();
+
+  return await prisma.offer.count({
+    where: {
+      status: status,
+      startTime: {
+        lte: now,
+      },
+      endTime: {
+        gte: now,
+      },
+    },
+  });
+}
+
+
 }

@@ -57,4 +57,9 @@ export class OfferService {
   async getOfferById(id: number) {
     return await offerRepository.findById(id);
   }
+
+  //count
+  async getCountOffers(status: string) {
+    return await offerRepository.getCountOffers(status);
+  }
 }

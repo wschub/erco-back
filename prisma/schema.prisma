@@ -26,7 +26,6 @@ model User {
   purchases  Transaction[] @relation("buyer") // Compras realizadas por el usuario
   sales      Transaction[] @relation("seller") // Ventas realizadas (por haber sido el seller de la oferta)
   createdAt  DateTime  @default(now())
-
 }
 
 

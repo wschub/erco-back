@@ -26,3 +26,18 @@ export const getTransactions = async (req: Request, res: Response) => {
   }
 };
 
+
+//totales
+export const getTotalPricKwh = async (req: Request, res: Response) => {
+  try {
+    const totalPrice = await transactionService.getTotalPrice();
+       const totalKwh = await transactionService.getTotalKwh();
+
+    res.status(200).json({
+      totalPrice,totalKwh
+    });
+  } catch (error: any) {
+    res.status(403).json({ error: error.message });
+  }
+};
+

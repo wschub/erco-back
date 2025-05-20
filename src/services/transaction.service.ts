@@ -30,4 +30,15 @@ export class TransactionService {
 
     throw new Error('Rol no autorizado para ver transacciones');
   }
+  
+  //TOTALES
+   async getTotalPrice() {
+     return transactionRepository.getTotalPrice();
+   }
+
+   async getTotalKwh() {
+    return transactionRepository.getTotalKwh();
+   }
+
+
 }
